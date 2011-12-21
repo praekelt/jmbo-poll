@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.aggregates import Sum
 
 from secretballot.models import Vote
 
@@ -29,3 +30,16 @@ class PollOption(models.Model):
         
     def __unicode__(self):
         return "%s - %s" % (self.poll.title, self.title)
+
+    def percentage(self):
+        total = Vote.objects.filter(
+            object_id__in=[o.id for o in self.poll.polloption_set.all()]
+        ).aggregate(Sum('vote'))['vote__sum'] or 0
+
+        if total:
+            votes = Vote.objects.filter(
+                object_id=self.id
+            ).aggregate(Sum('vote'))['vote__sum'] or 0
+            return votes * 100.0 / total
+        return 0
+            

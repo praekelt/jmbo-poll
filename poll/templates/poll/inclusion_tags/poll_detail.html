@@ -2,18 +2,29 @@
     <div class="title">{{ object.title }}</div>
 
     {% if can_vote %}
-    <form action="{% url poll-vote object.id %}" method="POST">
-        {% csrf_token %}
-        <ul class="form-ul">
-            {{ form.as_ul }}
-        </ul>
-        <div class="buttons">
-            <input type="submit" value="Vote" />
-        </div>
-    </form>
-
+        <form action="{% url poll-vote object.id %}" method="POST">
+            {% csrf_token %}
+            <ul class="form-ul">
+                {{ form.as_ul }}
+            </ul>
+            <div class="buttons">
+                <input type="submit" value="Vote" />
+            </div>
+        </form>
     {% else %}
-VOTED
+        <table class="poll-results" cellspacing="0">        
+        {% for obj in object.polloption_set.all %}
+            <tr class="poll-result-{{ forloop.counter }}">
+                <td>{{ obj.title }}</td> 
+                <td class="bar">
+                    <div style="width: {{ obj.percentage }}%;">&nbsp;</div>
+                </td>
+                <td>
+                    {{ obj.percentage }}%
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
     {% endif %}
     
 </div>
