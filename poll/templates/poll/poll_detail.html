@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% load jmbo_inclusion_tags post_inclusion_tags %} 
+{% load jmbo_inclusion_tags poll_tags %} 
 
 {% block content %}
     <div class="h2">{{ object.title }}</div>
 
     {% view_modifier view_modifier %}
 
-    {% include "poll/inclusion_tags/poll_detail.html" %}
+    {% poll_detail object %}
 
     {% object_comments object %}
 {% endblock %}

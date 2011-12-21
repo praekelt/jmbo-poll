@@ -1,1 +1,19 @@
-{{ object.title }}
+<div class="poll-detail">
+    <div class="title">{{ object.title }}</div>
+
+    {% if can_vote %}
+    <form action="{% url poll-vote object.id %}" method="POST">
+        {% csrf_token %}
+        <ul class="form-ul">
+            {{ form.as_ul }}
+        </ul>
+        <div class="buttons">
+            <input type="submit" value="Vote" />
+        </div>
+    </form>
+
+    {% else %}
+VOTED
+    {% endif %}
+    
+</div>
