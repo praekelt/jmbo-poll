@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from django.contrib import messages
 
 from poll.models import Poll
 from poll.forms import PollVoteForm
@@ -12,9 +13,8 @@ def poll_vote(request, poll_id):
         form = PollVoteForm(request.POST, request=request, poll=poll) 
         if form.is_valid():
             form.save()
-            request.user.message_set.create(
-                message=_("Your vote has been saved")
-            )
+            msg = _("Your vote has been saved")
+            messages.success(request, msg, fail_silently=True)
     else:
         form = PollVoteForm(request=request, poll=poll) 
 

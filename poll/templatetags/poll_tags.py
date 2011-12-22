@@ -1,5 +1,8 @@
 from django import template
 
+from poll.forms import PollVoteForm
+
+
 register = template.Library()
 
 
@@ -10,6 +13,8 @@ register = template.Library()
 def poll_detail(context, obj):
     context.update({
         'object': obj,
-        'can_vote': obj.can_vote(context['request'])
+        'can_vote': obj.can_vote(context['request']),
         })  
+    if not context.has_key('form'):       
+        context['form'] = PollVoteForm(request=context['request'], poll=obj)
     return context
