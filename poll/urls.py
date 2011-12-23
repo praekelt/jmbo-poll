@@ -12,9 +12,16 @@ urlpatterns = patterns(
         name='poll_object_detail'
     ),
     url(
-        r'^poll-vote/(?P<poll_id>\d+)/$', 
+        r'^poll-detail-vote/(?P<poll_id>\d+)/$', 
         'poll.views.poll_vote', 
-        {},
-        name='poll-vote'
+        {'template':'poll/poll_detail.html'},
+        name='poll-detail-vote'
     ), 
+    url(
+        r'^poll-widget-vote/(?P<poll_id>\d+)/$', 
+        'poll.views.poll_vote', 
+        {'template':'poll/poll_widget.html'},
+        name='poll-widget-vote'
+    ), 
+
 )

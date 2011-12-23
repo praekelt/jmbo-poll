@@ -7,7 +7,7 @@ from poll.models import Poll
 from poll.forms import PollVoteForm
 
 
-def poll_vote(request, poll_id):
+def poll_vote(request, poll_id, template):
     poll = get_object_or_404(Poll, id=poll_id)
     if request.method == 'POST':
         form = PollVoteForm(request.POST, request=request, poll=poll) 
@@ -19,4 +19,4 @@ def poll_vote(request, poll_id):
         form = PollVoteForm(request=request, poll=poll) 
 
     extra = dict(form=form, object=poll, view_modifier=None)
-    return render_to_response('poll/poll_detail.html', extra, context_instance=RequestContext(request))
+    return render_to_response(template, extra, context_instance=RequestContext(request))

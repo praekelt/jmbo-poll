@@ -1,4 +1,5 @@
 from django import template
+from django.core.urlresolvers import reverse
 
 from poll.forms import PollVoteForm
 
@@ -18,3 +19,11 @@ def poll_detail(context, obj):
     if not context.has_key('form'):       
         context['form'] = PollVoteForm(request=context['request'], poll=obj)
     return context
+
+
+@register.inclusion_tag(
+    'poll/inclusion_tags/poll_widget.html',
+    takes_context=True
+)
+def poll_widget(context, obj):
+    return poll_detail(context, obj)
