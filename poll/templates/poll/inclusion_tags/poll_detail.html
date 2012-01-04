@@ -1,6 +1,4 @@
 <div class="poll-detail" id="poll-detail-oid-{{ object.id }}">
-    <div class="title">{{ object.title }}</div>
-
     {% if can_vote %}
         <form action="{% url poll-detail-vote object.id %}" method="POST">
             {% csrf_token %}
