@@ -2,9 +2,9 @@
 {% load jmbo_inclusion_tags poll_tags %} 
 
 {% block content %}
-    <div class="h2">{{ object.title }}</div>
-
     {% view_modifier view_modifier %}
+
+    {% object_header object %}
 
     {% poll_detail object %}
 

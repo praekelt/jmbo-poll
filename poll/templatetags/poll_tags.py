@@ -12,9 +12,10 @@ register = template.Library()
     takes_context=True
 )
 def poll_detail(context, obj):
+    dc, can_vote = obj.can_vote(context['request'])
     context.update({
         'object': obj,
-        'can_vote': obj.can_vote(context['request']),
+        'can_vote': can_vote
         })  
     if not context.has_key('form'):       
         context['form'] = PollVoteForm(request=context['request'], poll=obj)

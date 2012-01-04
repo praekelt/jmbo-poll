@@ -13,7 +13,8 @@ class Poll(ModelBase):
     )
     
     def can_vote(self, request):
-        return Vote.objects.filter(
+        # Return tuple so API remains consistent with what Jmbo dictates
+        return 'dc', Vote.objects.filter(
             object_id__in=[o.id for o in self.polloption_set.all()],
             token=request.secretballot_token
         ).count() == 0
