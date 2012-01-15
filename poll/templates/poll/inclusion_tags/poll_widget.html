@@ -20,7 +20,7 @@
                     <div style="width: {{ obj.percentage }}%;">&nbsp;</div>
                 </td>
                 <td>
-                    {{ obj.percentage }}%
+                    {{ obj.percentage|floatformat }}%
                 </td>
             </tr>
         {% endfor %}
