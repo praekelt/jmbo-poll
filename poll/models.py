@@ -9,6 +9,8 @@ from jmbo.models import ModelBase
 class Poll(ModelBase):
     target = models.ManyToManyField(
         ModelBase,
+        null=True,
+        blank=True,
         related_name='poll_target'
     )
     
