@@ -1,9 +1,11 @@
+{% load i18n %}
+
 <div class="poll-detail" id="poll-detail-oid-{{ object.id }}">
     {% if can_vote %}
         <form action="{% url poll-detail-vote object.id %}" method="POST">
             {{ form.as_div }}
             <div class="buttons">
-                <input type="submit" value="Vote" />
+                <input type="submit" value="{% trans "Vote" %}" />
             </div>
         </form>
     {% else %}
