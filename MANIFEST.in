@@ -2,6 +2,6 @@ include AUTHORS.rst
 include CHANGELOG.rst
 include LICENSE
 include README.rst
-recursive-include jmbo/templates *
-recursive-include jmbo/templatetags *
-recursive-include jmbo/locale *
+recursive-include poll/templates *
+recursive-include poll/templatetags *
+recursive-include poll/locale *
