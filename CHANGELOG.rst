@@ -1,8 +1,8 @@
 Changelog
 =========
 
-next
-----
+0.0.3
+-----
 #. Signal dispatched when poll option selected.
 
 0.0.2
