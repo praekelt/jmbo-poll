@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Signal dispatched when poll option selected.
+
 0.0.2
 -----
 #. Fix detail view can_vote check.
