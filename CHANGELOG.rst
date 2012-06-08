@@ -1,6 +1,12 @@
 Changelog
 =========
 
+next
+----
+#. Polls do not abuse the base model liking settings anymore. 
+#. Vote detail page and widget now prompts user for login if required. 
+#. South migrations.
+
 0.0.3
 -----
 #. Signal dispatched when poll option selected.
