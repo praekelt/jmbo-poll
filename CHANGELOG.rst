@@ -5,7 +5,7 @@ next
 ----
 #. Polls do not abuse the base model liking settings anymore. 
 #. Vote detail page and widget now prompts user for login if required. 
-#. South migrations.
+#. South migrations. If you have an existing database then run ./bin/django migrate poll 0001 --fake.
 
 0.0.3
 -----
