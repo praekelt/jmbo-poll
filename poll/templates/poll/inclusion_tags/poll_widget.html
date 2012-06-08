@@ -3,7 +3,7 @@
 <div class="object-widget-inclusion poll-widget-inclusion" id="poll-widget-oid-{{ object.id }}">
     <div class="title">{{ object.title }}</div>
 
-    {% if can_vote %}
+    {% if can_vote_on_poll %}
         <form action="{% url poll-widget-vote object.id %}" method="POST">
             {% csrf_token %}
             {{ form.as_div }}
@@ -25,6 +25,11 @@
             </tr>
         {% endfor %}
         </table>
+
+        {% if reason == 'auth_required' %}
+            <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
+        {% endif %}
+
     {% endif %}
     
 </div>

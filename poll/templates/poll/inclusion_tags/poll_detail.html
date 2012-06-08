@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="object-detail-inclusion poll-detail-inclusion" id="poll-detail-oid-{{ object.id }}">
-    {% if can_vote %}
+    {% if can_vote_on_poll %}
         <form action="{% url poll-detail-vote object.id %}" method="POST">
             {% csrf_token %}
             {{ form.as_div }}
@@ -23,6 +23,11 @@
             </tr>
         {% endfor %}
         </table>
+
+        {% if reason == 'auth_required' %}
+            <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
+        {% endif %}
+
     {% endif %}
     
 </div>
