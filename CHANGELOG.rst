@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Require minimum jmbo 0.1.20
+
 0.0.4
 -----
 #. Polls do not abuse the base model liking settings anymore. 

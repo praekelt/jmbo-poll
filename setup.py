@@ -11,8 +11,7 @@ setup(
     url='http://github.com/praekelt/jmbo-poll',
     packages = find_packages(),
     install_requires = [
-        'jmbo',
-        'south',
+        'jmbo>=0.1.20',
     ],
     include_package_data=True,
     tests_require=[
