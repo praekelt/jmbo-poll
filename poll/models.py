@@ -52,6 +52,17 @@ but users won't be able to add new votes."),
         else:
             return False, 'voted'
 
+    @property
+    def vote_count(self):
+        """
+        Returns the total number of votes cast across all the
+        poll's options.
+        """
+        return Vote.objects.filter(
+            object_id__in=[o.id for o in self.polloption_set.all()]
+        ).aggregate(Sum('vote'))['vote__sum'] or 0
+
+
         
 class PollOption(models.Model):
     title = models.CharField(max_length=255)
@@ -65,15 +76,22 @@ class PollOption(models.Model):
     def __unicode__(self):
         return "%s - %s" % (self.poll.title, self.title)
 
-    def percentage(self):
-        total = Vote.objects.filter(
-            object_id__in=[o.id for o in self.poll.polloption_set.all()]
+    @property
+    def vote_count(self):
+        """
+        Returns the total number of votes cast for this
+        poll options.
+        """
+        return Vote.objects.filter(
+            object_id=self.id
         ).aggregate(Sum('vote'))['vote__sum'] or 0
 
-        if total:
-            votes = Vote.objects.filter(
-                object_id=self.id
-            ).aggregate(Sum('vote'))['vote__sum'] or 0
-            return votes * 100.0 / total
+    def percentage(self):
+        """
+        Returns the percentage of votes cast for this poll option in
+        relation to all of its poll's other options.
+        """
+        total_vote_count = self.poll.vote_count
+        if total_vote_count:
+            return self.vote_count * 100.0 / total_vote_count
         return 0
-            
