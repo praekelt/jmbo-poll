@@ -8,7 +8,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     depends_on = (
-        ("jmbo", "0001_initial"),
+        ("jmbo", "0002_auto__add_field_modelbase_subtitle"),
     )
 
     def forwards(self, orm):
