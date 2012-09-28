@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='jmbo-poll',
-    version='0.0.6',
+    version='0.0.7',
     description='Polling app for Jmbo.',
     long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
@@ -12,6 +12,7 @@ setup(
     packages = find_packages(),
     install_requires = [
         'jmbo>=0.1.20',
+        'jmbo-activity>=0.0.7'
     ],
     include_package_data=True,
     tests_require=[
