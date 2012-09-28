@@ -2,12 +2,16 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.dispatch import Signal
+from django.utils.translation import ugettext
 
 from secretballot.views import vote
 from jmbo.forms import as_div
 
 from poll.models import PollOption
 from poll.widgets import RadioSelect
+
+from activity import constants as activity_constants
+from activity import models as activity_models
 
 
 # signal that is sent when a vote is cast
@@ -37,5 +41,12 @@ class PollVoteForm(forms.Form):
         content_type = ContentType.objects.get(app_label='poll', model='polloption')
         vote(self.request, content_type, poll_option, 1)
         poll_voted.send(sender=self.__class__, poll_option=poll_option, request=self.request)
+        
+        activity_models.UserActivity.track_activity(user=self.request.user.member,
+                                                    activity=activity_constants.ACTIVITY_POLL_VOTE,
+                                                    sub=ugettext('<a href="%s">%s</a>' % (self.poll.get_absolute_url(),
+                                                                                          self.poll.title)),
+                                                    content_object=self.poll,
+                                                    image_object=self.poll)
 
     as_div = as_div
