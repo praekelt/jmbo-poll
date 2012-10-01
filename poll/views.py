@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 
@@ -19,7 +21,9 @@ def poll_vote(request, poll_id, template):
         # If we're posting from a widget but the post is not by ajax then 
         # we have to switch to the detail template.
         if (template == 'poll/poll_widget.html') and not request.is_ajax():
-            template = 'poll/poll_detail.html'
+            #template = 'poll/poll_detail.html'
+            # Rather redirect to object_detail view
+            return HttpResponseRedirect(reverse('poll_object_detail', args=[poll.slug,]))
     else:
         form = PollVoteForm(request=request, poll=poll) 
 
