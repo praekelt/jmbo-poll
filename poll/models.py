@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.aggregates import Sum
 from django.utils.translation import ugettext_lazy as _
@@ -59,11 +60,11 @@ but users won't be able to add new votes."),
         poll's options.
         """
         return Vote.objects.filter(
+            content_type=ContentType.objects.get(app_label='poll', model='polloption'),
             object_id__in=[o.id for o in self.polloption_set.all()]
         ).aggregate(Sum('vote'))['vote__sum'] or 0
 
 
-        
 class PollOption(models.Model):
     title = models.CharField(max_length=255)
     poll = models.ForeignKey(
@@ -72,7 +73,7 @@ class PollOption(models.Model):
     is_correct_answer = models.BooleanField(
         default=False, help_text="Is this option the correct answer?"
     )
-        
+
     def __unicode__(self):
         return "%s - %s" % (self.poll.title, self.title)
 
@@ -83,6 +84,7 @@ class PollOption(models.Model):
         poll options.
         """
         return Vote.objects.filter(
+            content_type=ContentType.objects.get_for_model(self),
             object_id=self.id
         ).aggregate(Sum('vote'))['vote__sum'] or 0
 
