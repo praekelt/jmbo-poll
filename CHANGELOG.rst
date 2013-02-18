@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.1
+---
+#. Add 'See results' link. This can possibly break current styling.
+
 0.0.9
 -----
 #. Correctly limit poll vote counts to PollOption ContentType.
