@@ -1,16 +1,19 @@
 {% load i18n %}
 
 <div class="object-detail-inclusion poll-detail-inclusion" id="poll-detail-oid-{{ object.id }}">
-    {% if can_vote_on_poll %}
-        <form action="{% url poll-detail-vote object.id %}" method="POST">
+    {% if can_vote_on_poll and not request.GET.results %}
+        <form action="{% url poll-detail-vote object.id %}" method="POST" id="poll-detail-form-{{ object.id }}">
             {% csrf_token %}
             {{ form.as_div }}
             <div class="buttons">
                 <input type="submit" value="{% trans "Vote" %}" />
+                <a href="{{ object.get_absolute_url }}?results=1" onclick="document.getElementById('poll-detail-results-{{ object.id }}').style.display = 'block'; document.getElementById('poll-detail-form-{{ object.id }}').style.display = 'none'; return false;">{% trans "See results" %}</a>                
             </div>
         </form>
-    {% else %}
-        <table class="poll-results" cellspacing="0">        
+    {% endif %}
+
+   <div id="poll-detail-results-{{ object.id }}" {% if can_vote_on_poll and not request.GET.results %}style="display: none;"{% endif %}>
+   <table class="poll-results" cellspacing="0">        
         {% for obj in object.polloption_set.all %}
             <tr class="poll-result-{{ forloop.counter }}">
                 <td>{{ obj.title }}</td> 
@@ -23,11 +26,15 @@
             </tr>
         {% endfor %}
         </table>
-
-        {% if reason == 'auth_required' %}
-            <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
+        {% if can_vote_on_poll %}        
+        <div class="buttons">
+            <a href="{{ object.get_absolute_url }}" onclick="document.getElementById('poll-detail-results-{{ object.id }}').style.display = 'none'; document.getElementById('poll-detail-form-{{ object.id }}').style.display = 'block'; return false;">{% trans "Vote" %}</a>                
+        </div>
         {% endif %}
+    </div>
 
+    {% if reason == 'auth_required' %}
+        <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
     {% endif %}
-    
+
 </div>
