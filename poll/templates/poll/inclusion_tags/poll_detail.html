@@ -13,7 +13,8 @@
         </form>
     {% endif %}
 
-    {% jmbocache 300 'object-detail-inclusion' object.id object.modified can_vote_on_poll reason %}
+    {% with request.GET.results as show_results %}
+    {% jmbocache 300 'object-detail-inclusion' object.id object.modified can_vote_on_poll reason show_results %}
         <div id="poll-detail-results-{{ object.id }}" {% if can_vote_on_poll and not request.GET.results %}style="display: none;"{% endif %}>
         <table class="poll-results" cellspacing="0">
             {% for obj in object.polloption_set.all %}
@@ -39,5 +40,6 @@
             <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
         {% endif %}
     {% endjmbocache %}
+    {% endwith %}
 
 </div>
