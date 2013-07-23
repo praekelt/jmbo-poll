@@ -1,6 +1,7 @@
-{% load i18n %}
+{% load i18n jmbo_template_tags %}
 
 <div class="object-detail-inclusion poll-detail-inclusion" id="poll-detail-oid-{{ object.id }}">
+
     {% if can_vote_on_poll and not request.GET.results %}
         <form action="{% url poll-detail-vote object.id %}" method="POST" id="poll-detail-form-{{ object.id }}">
             {% csrf_token %}
@@ -12,29 +13,31 @@
         </form>
     {% endif %}
 
-   <div id="poll-detail-results-{{ object.id }}" {% if can_vote_on_poll and not request.GET.results %}style="display: none;"{% endif %}>
-   <table class="poll-results" cellspacing="0">        
-        {% for obj in object.polloption_set.all %}
-            <tr class="poll-result-{{ forloop.counter }}">
-                <td>{{ obj.title }}</td> 
-                <td class="bar">
-                    <div style="width: {{ obj.percentage }}%;">&nbsp;</div>
-                </td>
-                <td>
-                    {{ obj.percentage|floatformat }}%
-                </td>
-            </tr>
-        {% endfor %}
-        </table>
-        {% if can_vote_on_poll %}        
-        <div class="buttons">
-            <a href="{{ object.get_absolute_url }}" onclick="document.getElementById('poll-detail-results-{{ object.id }}').style.display = 'none'; document.getElementById('poll-detail-form-{{ object.id }}').style.display = 'block'; return false;">{% trans "Vote" %}</a>                
+    {% jmbocache 300 'object-detail-inclusion' object.id object.modified can_vote_on_poll reason %}
+        <div id="poll-detail-results-{{ object.id }}" {% if can_vote_on_poll and not request.GET.results %}style="display: none;"{% endif %}>
+        <table class="poll-results" cellspacing="0">
+            {% for obj in object.polloption_set.all %}
+                <tr class="poll-result-{{ forloop.counter }}">
+                    <td>{{ obj.title }}</td>
+                    <td class="bar">
+                        <div style="width: {{ obj.percentage }}%;">&nbsp;</div>
+                    </td>
+                    <td>
+                        {{ obj.percentage|floatformat }}%
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+            {% if can_vote_on_poll %}
+            <div class="buttons">
+                <a href="{{ object.get_absolute_url }}" onclick="document.getElementById('poll-detail-results-{{ object.id }}').style.display = 'none'; document.getElementById('poll-detail-form-{{ object.id }}').style.display = 'block'; return false;">{% trans "Vote" %}</a>                
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
-    </div>
 
-    {% if reason == 'auth_required' %}
-        <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
-    {% endif %}
+        {% if reason == 'auth_required' %}
+            <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
+        {% endif %}
+    {% endjmbocache %}
 
 </div>

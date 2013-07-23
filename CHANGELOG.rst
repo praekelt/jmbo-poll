@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Add caching to detail and widget templates.
+
 0.1
 ---
 #. Add 'See results' link. This can possibly break current styling.
