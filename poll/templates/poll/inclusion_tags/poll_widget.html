@@ -1,8 +1,13 @@
-{% load i18n %}
+{% load i18n jmbo_template_tags %}
+{% comment %}
+The strangely indented jmbocache tags are because the form cannot be cached.
+{% endcomment %}
 
+{% jmbocache 300 'object-widget-inclusion' object.id object.modified can_vote_on_poll %}
 <div class="object-widget-inclusion poll-widget-inclusion" id="poll-widget-oid-{{ object.id }}">
     {% if object.image %}<div class="image"><img src="{{ object.get_modelbase_list_item_thumbnail_LAYER_url }}"/></div>{% endif %}
     <div class="title"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></div>
+{% endjmbocache %}
 
     {% if can_vote_on_poll %}
         <form action="{% url poll-widget-vote object.id %}" method="POST" id="poll-widget-form-{{ object.id }}">
@@ -15,11 +20,12 @@
         </form>
     {% endif %}
 
+{% jmbocache 300 'object-widget-inclusion' object.id object.modified can_vote_on_poll reason %}
     <div id="poll-widget-results-{{ object.id }}" {% if can_vote_on_poll %}style="display: none;"{% endif %}>
         <table class="poll-results" cellspacing="0">
         {% for obj in object.polloption_set.all %}
             <tr class="poll-result-{{ forloop.counter }}">
-                <td>{{ obj.title }}</td> 
+                <td>{{ obj.title }}</td>
                 <td class="bar">
                     <div style="width: {{ obj.percentage }}%;">&nbsp;</div>
                 </td>
@@ -29,7 +35,7 @@
             </tr>
         {% endfor %}
         </table>
-        {% if can_vote_on_poll %}        
+        {% if can_vote_on_poll %}
         <div class="buttons">
             <a href="{{ object.get_absolute_url }}" onclick="document.getElementById('poll-widget-results-{{ object.id }}').style.display = 'none'; document.getElementById('poll-widget-form-{{ object.id }}').style.display = 'block'; return false;">{% trans "Vote" %}</a>                
         </div>
@@ -43,3 +49,4 @@
     {% endif %}
 
 </div>
+{% endjmbocache %}
