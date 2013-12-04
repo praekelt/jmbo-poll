@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Performance improvements.
+
 0.1.1
 -----
 #. Add caching to detail and widget templates.

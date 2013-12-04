@@ -48,10 +48,11 @@ but users won't be able to add new votes."),
             object_id__in=[o.id for o in self.polloption_set.all()],
             token=request.secretballot_token
         )
-        if votes.count() == 0:
-            return True, 'can_vote'
-        else:
+        if votes.exists():
             return False, 'voted'
+        else:
+            return True, 'can_vote'
+
 
     @property
     def vote_count(self):
