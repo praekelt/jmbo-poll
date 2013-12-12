@@ -17,8 +17,8 @@ def poll_detail(context, obj):
         'object': obj,
         'can_vote_on_poll': can_vote_on_poll,
         'reason': reason
-        })  
-    if not context.has_key('form'):       
+        })
+    if can_vote_on_poll and not context.has_key('form'):
         context['form'] = PollVoteForm(request=context['request'], poll=obj)
     return context
 
