@@ -1,8 +1,8 @@
 Changelog
 =========
 
-next
-----
+0.1.2
+-----
 #. Performance improvements.
 
 0.1.1
