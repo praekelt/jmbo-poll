@@ -98,3 +98,6 @@ class PollOption(models.Model):
         if total_vote_count:
             return self.vote_count * 100.0 / total_vote_count
         return 0
+
+    class Meta:
+        ordering = ('pk', )
