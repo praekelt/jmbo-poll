@@ -6,3 +6,4 @@ build/
 dist/
 *.swo
 /docs/_build
+*.egg
