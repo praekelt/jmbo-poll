@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Add tests.
+
 0.1.3
 -----
 #. Add Poll Option ordering to use PK as the default
