@@ -10,7 +10,7 @@ The strangely indented jmbocache tags are because the form cannot be cached.
 {% endjmbocache %}
 
     {% if can_vote_on_poll %}
-        <form action="{% url poll-widget-vote object.id %}" method="POST" id="poll-widget-form-{{ object.id }}">
+        <form action="{% url "poll-widget-vote" object.id %}" method="POST" id="poll-widget-form-{{ object.id }}">
             {% csrf_token %}
             {{ form.as_div }}
             <div class="buttons">
@@ -44,7 +44,7 @@ The strangely indented jmbocache tags are because the form cannot be cached.
 
     {% if not can_vote_on_poll %}
         {% if reason == 'auth_required' %}
-            <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
+            <a href="{% url "login" %}">{% trans "You must be signed in to vote" %}</a>
         {% endif %}
     {% endif %}
 
