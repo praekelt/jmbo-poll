@@ -5,7 +5,7 @@ The strangely indented jmbocache tags are because the form cannot be cached.
 
 {% jmbocache 300 'object-widget-inclusion' object.id object.modified can_vote_on_poll %}
 <div class="object-widget-inclusion poll-widget-inclusion" id="poll-widget-oid-{{ object.id }}">
-    {% if object.image %}<div class="image"><img src="{{ object.get_modelbase_list_item_thumbnail_LAYER_url }}"/></div>{% endif %}
+    {% if object.image %}<div class="image"><img src="{{ object.get_modelbase_list_item_thumbnail_url }}"/></div>{% endif %}
     <div class="title"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></div>
 {% endjmbocache %}
 
