@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.0.0a1
+-------
+#. Add tests.
+#. Django 1.6 compatibility.
+#. Up minimum jmbo to 2.0.0.
+
 0.1.3
 -----
 #. Add Poll Option ordering to use PK as the default

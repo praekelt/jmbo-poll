@@ -3,7 +3,7 @@
 <div class="object-detail-inclusion poll-detail-inclusion" id="poll-detail-oid-{{ object.id }}">
 
     {% if can_vote_on_poll and not request.GET.results %}
-        <form action="{% url poll-detail-vote object.id %}" method="POST" id="poll-detail-form-{{ object.id }}">
+        <form action="{% url "poll-detail-vote" object.id %}" method="POST" id="poll-detail-form-{{ object.id }}">
             {% csrf_token %}
             {{ form.as_div }}
             <div class="buttons">
@@ -37,7 +37,7 @@
         </div>
 
         {% if reason == 'auth_required' %}
-            <a href="{% url login %}">{% trans "You must be signed in to vote" %}</a>
+            <a href="{% url "login" %}">{% trans "You must be signed in to vote" %}</a>
         {% endif %}
     {% endjmbocache %}
     {% endwith %}
