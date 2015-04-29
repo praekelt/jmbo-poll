@@ -11,11 +11,12 @@ setup(
     url='http://github.com/praekelt/jmbo-poll',
     packages=find_packages(),
     install_requires=[
-        'jmbo>=0.1.20',
+        'jmbo==2.0.0a2',
     ],
     include_package_data=True,
     tests_require=[
-        'django-setuptest',
+        'django-setuptest>=0.1.6',
+        'psycopg2',
     ],
     test_suite="setuptest.setuptest.SetupTestSuite",
     classifiers=[
